@@ -1,16 +1,19 @@
 package com.passwordManager.passwordManager.entity;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 @Entity
 public class Passwords {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long passwordId;
+
+    public Long getPasswordId() {
+        return passwordId;
+    }
+
+    public void setPasswordId(Long passwordId) {
+        this.passwordId = passwordId;
+    }
+
     private String emailId;
     private String userName;
     private String password;

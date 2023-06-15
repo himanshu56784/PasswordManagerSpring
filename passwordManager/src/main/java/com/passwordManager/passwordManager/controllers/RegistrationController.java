@@ -1,19 +1,16 @@
 package com.passwordManager.passwordManager.controllers;
 
-import com.passwordManager.passwordManager.entity.Registration;
-import com.passwordManager.passwordManager.entity.Sites;
+import com.passwordManager.passwordManager.entity.Users;
 import com.passwordManager.passwordManager.service.RegistrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/registration")
 public class RegistrationController {
 
@@ -21,25 +18,13 @@ public class RegistrationController {
     @Autowired
     private RegistrationService registrationService;
     @PostMapping("/save")
-    public Registration saveRegistration(@RequestBody Registration registration) {
+    public Users saveRegistration(@RequestBody Users registration) {
        logger.info("inside save registration");
         return registrationService.saveRegistration(registration);
     }
 
-    @PostMapping("sites/save/{id}")
-    public List<Sites> saveSites(@PathVariable("id") Long id,@RequestBody Sites sites)
-    {
-        return registrationService.saveSites(sites,id);
+    @GetMapping("/")
+    private List<Users> getAllUsers(){
+        return registrationService.getAllUsers();
     }
-
-
-
-
-
-
-
-
-
-
-
 }

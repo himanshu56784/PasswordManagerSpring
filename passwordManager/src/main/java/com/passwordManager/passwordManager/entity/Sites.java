@@ -1,9 +1,6 @@
 package com.passwordManager.passwordManager.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,21 +14,40 @@ public class Sites {
     private String siteUrl;
     private String siteName;
     private String imageUrl;
-    @OneToMany
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL
+    )
     @JoinColumn(
             name = "site_id",
             referencedColumnName = "siteId"
     )
-    private List<Passwords> passwords;
+    @JsonIgnore
+    private List<Passwords> passwordsList;
+
+
 
     public Sites() {
+
+    }
+
+    public Long getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(Long siteId) {
+        this.siteId = siteId;
     }
 
     public Sites(String siteUrl, String siteName, String imageUrl, List<Passwords> passwords) {
         this.siteUrl = siteUrl;
         this.siteName = siteName;
         this.imageUrl = imageUrl;
-        this.passwords = passwords;
+        this.passwordsList = passwords;
+    }
+
+    public void addPassword(Passwords passwords){
+        this.passwordsList.add(passwords);
     }
 
     public String getSiteUrl() {
@@ -58,12 +74,12 @@ public class Sites {
         this.imageUrl = imageUrl;
     }
 
-    public List<Passwords> getPasswords() {
-        return passwords;
+    public List<Passwords> getPasswordsList() {
+        return passwordsList;
     }
 
-    public void setPasswords(List<Passwords> passwords) {
-        this.passwords = passwords;
+    public void setPasswordsList(List<Passwords> passwordsList) {
+        this.passwordsList = passwordsList;
     }
 
 }
